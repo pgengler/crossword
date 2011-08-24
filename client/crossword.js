@@ -14,14 +14,13 @@ var keys = {
 
 $(function() {
 
-	$('tr').each(function() {
-		var row = $(this);
-		row.find('td').each(function() {
-			var cell = $(this);
+	addNumbers();
+	$(window).resize(addNumbers);
 
-			cell.data('x', row.children().index(cell));
-			cell.data('y', row.parent('tbody').children().index(row));
-		});
+	$('ol li').click(function() {
+		select($('td[position='+$(this).attr('value')+']'));
+		direction = $(this).closest('div').attr('id') == 'across' ? ACROSS : DOWN;
+		highlight();
 	});
 
 	$('td:not(.unused').click(function() {
@@ -295,4 +294,38 @@ function isAlpha(charCode)
 		return true;
 	}
 	return false;
+}
+
+function addNumbers()
+{
+	var counter = 1;
+
+	$('.number').remove();
+
+	$('tr').each(function() {
+		var row = $(this);
+		row.find('td').each(function() {
+			var cell = $(this);
+
+			if (cell.hasClass('unused')) {
+				return;
+			}
+
+			var index = row.children().index(cell);
+
+			var $prevHorizontal = cell.prev();
+			var $prevVertical   = row.prev().find('td:eq('+index+')');
+			if (($prevHorizontal.length == 0 || $prevHorizontal.hasClass('unused')) || ($prevVertical.length == 0 || $prevVertical.hasClass('unused'))) {
+				var $number = $('<span class="number"/>').text(counter).appendTo($('body'));
+				$number.position({
+					of:     cell,
+					my:     'left top',
+					at:     'left top',
+					offset: '4px'
+				});
+				cell.attr('position', counter);
+				counter++;
+			}
+		});
+	});
 }

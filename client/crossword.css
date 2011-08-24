@@ -40,3 +40,7 @@ td {
 		background-color: #FFFF00;
 	}
 
+span.number {
+	font-size: 7px;
+	position: absolute;
+}
