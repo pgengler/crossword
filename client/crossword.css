@@ -1,0 +1,42 @@
+div {
+	display: inline-block;
+}
+
+div#across, div#down {
+	overflow-y: auto;
+	width: 25%;
+}
+
+	div#across {
+		float: left;
+	}
+
+	div#down {
+		float: right;
+	}
+
+table {
+	border-collapse: collapse;
+}
+
+
+td {
+	border: 1px solid black;
+	font-family: Helvetica,Arial,sans-serif;
+	height: 2em;
+	text-align: center;
+	width: 2em;
+}
+
+	td.unused {
+		background-color: black;
+	}
+
+	td.active {
+		background-color: #FFFF5C;
+	}
+
+	td.selected {
+		background-color: #FFFF00;
+	}
+

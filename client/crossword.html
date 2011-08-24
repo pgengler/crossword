@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Multiplayer crossword with nodejs/WebSocket</title>
+		<link href='crossword.css' rel='stylesheet'>
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js'></script>
+		<script src='crossword.js'></script>
+	</head>
+	<body>
+
+		<div id='across'>
+			<ol>
+				<li>Camel's back feature</li>
+				<li value='5'>Gear tooth</li>
+				<li value='8'>Doorbell sound</li>
+				<li value='13'>Panama waterway</li>
+				<li>Physician's org.</li>
+				<li>Continue without a break</li>
+				<li>Where Beijing is</li>
+				<li>Mayonnaise holder</li>
+				<li>Privileged group</li>
+				<li>"Don't bother!"</li>
+				<li value='22'>Sunbather's goal</li>
+				<li>Approves</li>
+				<li>Fuss over</li>
+				<li value='28'>24-hr. cash sources</li>
+				<li value='30'>Casino action</li>
+				<li value='33'>Woodwind instruments</li>
+				<li>Arctic ice sheet</li>
+				<li>Mountain lion</li>
+				<li>Mall regular's motto</li>
+				<li value='39'>Very long time</li>
+				<li>Signals to actors</li>
+				<li>Wallpaper adhesive</li>
+				<li>Physicians: Abbr.</li>
+				<li>Looked at</li>
+				<li>Nun's title</li>
+				<li>A/C unit</li>
+				<li>Enjoyment</li>
+				<li>Purchase something sight unseen</li>
+				<li value='55'>Laces into</li>
+				<li>Jazz instrument</li>
+				<li>Valentine's Day bouquet</li>
+				<li>Nostalgic song</li>
+				<li>Be deceitful</li>
+				<li>Stubborn animals</li>
+				<li>Boscs and Bartletts</li>
+				<li>Conclude</li>
+				<li>Conclude</li>
+			</ol>
+		</div>
+
+		<div id='puzzle'>
+			<table>
+				<tr>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+				</tr>
+				<tr>
+					<td class='unused'></td>
+					<td class='unused'></td>
+					<td class='unused'></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td class='unused'></td>
+					<td class='unused'></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class='unused'></td>
+					<td class='unused'></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td class='unused'></td>
+					<td class='unused'></td>
+					<td class='unused'></td>
+				</tr>
+				<tr>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class='unused'></td>
+				</tr>
+			</table>
+		</div>
+
+		<div id='down'>
+			<ol>
+				<li>"Very funny!"</li>
+				<li>Ph.D. issuer</li>
+				<li>Horse's hair</li>
+				<li>Try out, as a board game</li>
+				<li>Louisiana cuisine</li>
+				<li>Poet __ Khayyam</li>
+				<li>Attire</li>
+				<li>Small streams</li>
+				<li>Does a luau dance</li>
+				<li>"What's __ for me?"</li>
+				<li>Insect drawn to light</li>
+				<li>Point opposite WNW</li>
+				<li>Medicine amts.</li>
+				<li value='20'>Rowing implement</li>
+				<li>Juliet's love</li>
+				<li value='24'>Sat for a photo</li>
+				<li>Detest</li>
+				<li>Natural satellites</li>
+				<li>Invigorates, with "up"</li>
+				<li>Directory Woody</li>
+				<li>Yoyos, for example</li>
+				<li>Break open</li>
+				<li>Overact</li>
+				<li>Come to a point</li>
+				<li value='34'>Chimney duct</li>
+				<li>Hand-held organizers: Abbr.</li>
+				<li value='37'>Freeze over</li>
+				<li>Indignant</li>
+				<li value='43'>Washington and Wyoming</li>
+				<li>"Green" energy source</li>
+				<li>How jet-setters travel</li>
+				<li>Repaired</li>
+				<li>Hay bundle</li>
+				<li>Beef-inspection agcy.</li>
+				<li>Maui or Tahiti</li>
+				<li>Acquire</li>
+				<li>Wear a long face</li>
+				<li>Norway's capital</li>
+				<li>Hold on to</li>
+				<li>Double-curve letter</li>
+				<li>Move like a rabbit</li>
+			</ol>
+		</div>
+
+	</body>
+</html>
