@@ -12,6 +12,8 @@ var keys = {
 	DELETE:      46
 };
 
+var socket = initSocket();
+
 $(function() {
 
 	addNumbers();
@@ -76,7 +78,9 @@ $(function() {
 				break;
 
 			case keys.BACKSPACE:
-				$('td.selected').text('');
+				var $cell = $('td.selected');
+				$cell.text('');
+				notifyPlay($cell.data('x'), $cell.data('y'), '');
 				selectPrev(false);
 				handled = true;
 				break;
@@ -95,7 +99,14 @@ $(function() {
 			return;
 		}
 		var $curr = $('td.selected');
-		$curr.text(String.fromCharCode(event.which).toUpperCase());
+		var letter = String.fromCharCode(event.which).toUpperCase();
+
+		var x = $curr.data('x');
+		var y = $curr.data('y');
+
+		playLetter(x, y, letter);
+		notifyPlay(x, y, letter);
+
 		selectNext(true);
 		highlight();
 	});
@@ -311,10 +322,14 @@ function addNumbers()
 				return;
 			}
 
-			var index = row.children().index(cell);
+			var x = row.children().index(cell);
+			var y = row.parent('tbody').children().index(row);
+
+			cell.data('x', x);
+			cell.data('y', y);
 
 			var $prevHorizontal = cell.prev();
-			var $prevVertical   = row.prev().find('td:eq('+index+')');
+			var $prevVertical   = row.prev().find('td:eq('+x+')');
 			if (($prevHorizontal.length == 0 || $prevHorizontal.hasClass('unused')) || ($prevVertical.length == 0 || $prevVertical.hasClass('unused'))) {
 				var $number = $('<span class="number"/>').text(counter).appendTo($('body'));
 				$number.position({
@@ -328,4 +343,28 @@ function addNumbers()
 			}
 		});
 	});
+}
+
+function initSocket()
+{
+	var socket = io.connect('http://192.168.1.95:2000');
+	socket.on('play', function(data) {
+		playLetter(data.x, data.y, data.letter);
+	});
+
+	return socket;
+}
+
+function playLetter(x, y, letter)
+{
+	var $cell = $('#board').find('tr:eq('+y+')').find('td:eq('+x+')');
+
+	$cell.text(letter);
+}
+
+function notifyPlay(x, y, letter)
+{
+	if (socket) {
+		socket.emit('play', { x: x, y: y, letter: letter });
+	}
 }
