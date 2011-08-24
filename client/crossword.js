@@ -23,7 +23,7 @@ $(function() {
 		highlight();
 	});
 
-	$('td:not(.unused').click(function() {
+	$('td').not('.unused').click(function() {
 		select($(this));
 		highlight();
 	});
