@@ -348,6 +348,22 @@ function addNumbers()
 function initSocket()
 {
 	var socket = io.connect('http://192.168.1.95:2000');
+	socket.on('board', function(data) {
+		var board = data.board;
+		var numRows = board.length;
+		for (var row = 0; row < numRows; row++) {
+			if (!board[row]) {
+				continue;
+			}
+			var numCells = board[row].length;
+			for (var cell = 0; cell < numCells; cell++) {
+				if (board[row][cell]) {
+					playLetter(cell, row, board[row][cell]);
+				}
+			}
+		}
+	});
+
 	socket.on('play', function(data) {
 		playLetter(data.x, data.y, data.letter);
 	});
