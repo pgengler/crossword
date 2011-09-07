@@ -104,7 +104,7 @@ $(function() {
 		var x = $curr.data('x');
 		var y = $curr.data('y');
 
-		playLetter(x, y, letter);
+		playLetter(x, y, letter, true);
 		notifyPlay(x, y, letter);
 
 		selectNext(true);
@@ -358,24 +358,26 @@ function initSocket()
 			var numCells = board[row].length;
 			for (var cell = 0; cell < numCells; cell++) {
 				if (board[row][cell]) {
-					playLetter(cell, row, board[row][cell]);
+					playLetter(cell, row, board[row][cell], false);
 				}
 			}
 		}
 	});
 
 	socket.on('play', function(data) {
-		playLetter(data.x, data.y, data.letter);
+		playLetter(data.x, data.y, data.letter, false);
 	});
 
 	return socket;
 }
 
-function playLetter(x, y, letter)
+function playLetter(x, y, letter, mine)
 {
 	var $cell = $('#board').find('tr:eq('+y+')').find('td:eq('+x+')');
 
 	$cell.text(letter);
+
+	$cell.removeClass('mine other').addClass(mine ? 'mine' : 'other');
 }
 
 function notifyPlay(x, y, letter)

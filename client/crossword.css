@@ -40,6 +40,14 @@ td {
 		background-color: #FFFF00;
 	}
 
+	td.mine {
+		color: #00C;
+	}
+
+	td.other {
+		color: black;
+	}
+
 span.number {
 	font-size: 7px;
 	position: absolute;
